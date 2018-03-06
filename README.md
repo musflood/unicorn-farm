@@ -1,5 +1,7 @@
 # Unicorn Farm Manager
 
+Now you too can run a unicorn farm! Keep track of the current location of your unicorns and move them about with a simple command line interface.
+
 ## How to use
 Note: This application requires [Python 3.6](https://www.python.org/downloads/) to run.
 
