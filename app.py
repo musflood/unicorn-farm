@@ -16,11 +16,10 @@ class Unicorn(object):
         """Print a unicorn nicely."""
         return f'{self.name:^11} {self.position:^11} {self.color:^11} {self.fave_food:^11}'
 
-    def move(self, position):
+    def _move(self, position):
         """Move the unicorn to the barn, trails, field."""
         if position.lower() not in ('barn', 'trails', 'field'):
-            print('invalid option')
-            return
+            raise ValueError('Invalid position to move.')
         self.position = position
 
     @classmethod
@@ -31,7 +30,7 @@ class Unicorn(object):
             print(unicorn)
 
     @classmethod
-    def validate_move(cls, name):
+    def move(cls, name):
         """Move the given unicorn."""
         unicorn_to_move = [unicorn for unicorn in cls.unicorns if unicorn.name == name.title()]
         if not unicorn_to_move:
@@ -39,8 +38,11 @@ class Unicorn(object):
             return
         position = input('where to move? (barn, trails, field) ')
         for unicorn in unicorn_to_move:
-            unicorn.move(position)
-            print(f'{unicorn.name} moved to {unicorn.position}')
+            try:
+                unicorn._move(position)
+                print(f'{unicorn.name} moved to {unicorn.position}')
+            except ValueError:
+                print(f'cannot move unicorn to {position}')
 
     @classmethod
     def add(cls):
@@ -98,7 +100,7 @@ def main():
         if user_input == '3':
             Unicorn.list()
             name = input('Which unicorn to move? ')
-            Unicorn.validate_move(name)
+            Unicorn.move(name)
 
         Unicorn.save()
 
